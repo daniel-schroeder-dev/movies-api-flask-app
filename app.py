@@ -23,6 +23,13 @@ movie = Movie()
 best_results = []
 api_url = "https://image.tmdb.org/t/p/w500/"
 
+
+def get_movie(slug):
+    for best_result in best_results:
+        if best_result["slug"] == slug:
+            return best_result
+
+
 for movie_title in movies_list:
     results = movie.search(movie_title)
 
@@ -47,7 +54,5 @@ def home():
 
 @app.route("/movie/<slug>")
 def movie(slug):
-    movie = [
-        best_result for best_result in best_results if best_result["slug"] == slug
-    ][0]
+    movie = get_movie(slug)
     return render_template("movie.html", movie=movie)
